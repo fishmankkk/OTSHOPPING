@@ -1,0 +1,153 @@
+<style lang="less" scoped>
+.home-swiper-module{
+  width: 100%;
+  height:300rpx;
+  padding: 0 20rpx;
+  swiper-item{
+    width: 520rpx !important;
+    height: 344rpx !important;
+    left:115rpx;
+    .on-swiper{
+      // padding:-20rpx;
+    }
+    .unon-swiper{
+      padding:20rpx;
+      opacity:0.5;
+    }
+    image{
+      width: 100%;
+    }
+  }
+}
+.tool-icon-list-module{
+  padding: 0 20rpx;
+  display: flex;
+  flex-direction: row;
+  margin: 30rpx 0;
+  .icon-item{
+    width: 167.5rpx;
+    margin: 0 5rpx;
+    text-align: center;
+    image{
+      width: 100%;
+      padding: 0 50rpx;
+      height: 67.5rpx;
+      box-sizing: border-box;
+    }
+    .title{
+      font-size: 26rpx;
+    }
+  }
+}
+</style>
+<template>
+  <view class="container">
+    <swiper circular class="home-swiper-module" @change="swiperFn">
+      <repeat for="{{imgUrls}}" key="index" index="index" item="item"> 
+        <swiper-item @tap="handleToSwiperItem({{item}})">
+          <view slot="common" class="swiper-item-wrapper" class="{{(curSwiper == index) ? 'on-swiper': 'unon-swiper'}}">
+            <image src="{{item.url}}" class="slide-image"/>
+          </view>
+        </swiper-item>
+      </repeat>
+    </swiper>
+
+    <view class="tool-icon-list-module">
+      <repeat for="{{toolList}}" key="index" index="index" item="item">
+        <view class="icon-item" @tap="handleToIconItem({{item}})">
+          <image src="{{item.url}}"></image>
+          <text class="title">{{item.title}}</text>
+        </view>
+      </repeat>
+    </view>
+      <view>home</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import testMixin from '../../mixins/test'
+
+  @connect({
+    num (state) {
+      return state.counter.num
+    },
+    asyncNum (state) {
+      return state.counter.asyncNum
+    },
+    sumNum (state) {
+      return state.counter.num + state.counter.asyncNum
+    }
+  })
+
+  export default class extends wepy.page {
+    config = {
+      navigationBarTitleText: 'OTSHOP'
+    }
+    components = {
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      curSwiper: 0,
+      imgUrls: [
+        {
+          id: 0,
+          url: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'
+        },
+        {
+          id: 1,
+          url: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'
+        },
+        {
+          id: 2,
+          url: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+        }
+      ],
+      toolList: [
+        {
+          id: 0,
+          url: '/assets/icon1.png',
+          title: 'HOT'
+        },
+        {
+          id: 1,
+          url: '/assets/icon2.png',
+          title: 'NEW'
+        },
+        {
+          id: 2,
+          url: '/assets/icon3.png',
+          title: 'SUPER'
+        },
+        {
+          id: 3,
+          url: '/assets/icon5.png',
+          title: 'OTHER'
+        }
+      ]
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      handleToSwiperItem ({id}) {
+        console.log(id)
+      },
+      swiperFn (e) {
+        console.log(e)
+        this.curSwiper = e.detail.current
+      },
+      handleToIconItem ({id}) {
+        console.log(id)
+      }
+    }
+
+    onLoad() {
+    }
+  }
+</script>
