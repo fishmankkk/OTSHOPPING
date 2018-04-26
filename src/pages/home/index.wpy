@@ -39,6 +39,94 @@
     }
   }
 }
+.clear-line{
+  background-color: #eeeeee;
+  height: 15rpx;
+  width:100%;
+}
+.super-module{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .one-row{
+    display: flex;
+    flex-direction: column;
+    .one-col{
+      height: 610rpx;
+      image{
+        width: 370rpx;
+        height: 610rpx;
+      }
+    }
+  }
+  .two-col{
+    width: 370rpx;
+        height: 300rpx;
+      image{
+        width: 370rpx;
+        height: 300rpx;
+      }
+    }
+    .two-col +.two-col{
+      margin-top: 10rpx;
+    }
+  .one-row +.one-row{
+    margin-left: 10rpx;
+  }
+}
+.product-view-module{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .header{
+    padding: 0 20rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    width: 100%;
+    .title{
+      color: #5f4b8b;
+    }
+  }
+  .content{
+    width: 100%;
+    .one-line-one{
+      image{
+        width: 100%;
+        height: 300rpx;
+      }
+    }
+    .two-inline{
+      margin-top: 5rpx;
+      display: flex;
+      flex-direction: row;
+      .one-line-two{
+        width: 370rpx;
+        image{
+          width: 100%;
+          height: 250rpx;
+        }
+        .item-msg{
+          padding: 5rpx 10rpx; 
+          .title{
+            font-size: 28rpx;
+            color: #000;
+          }
+          .des{
+            font-size: 26rpx;
+            color: #666666;
+          }
+          .money{
+            color: #CE0000;
+          }
+        }
+        
+      }
+      .one-line-two +.one-line-two{
+        margin-left: 10rpx;
+      }
+    }
+  }
+}
 </style>
 <template>
   <view class="container">
@@ -59,6 +147,74 @@
           <text class="title">{{item.title}}</text>
         </view>
       </repeat>
+    </view>
+
+    <view class="clear-line"></view>
+    <!-- 超级板块 -->
+    <view class="super-module">
+      <view class="one-row">
+        <view class="one-col" @tap="handleToProduct(0)">
+          <image scaleToFill src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+        </view>
+      </view>
+      <view class="one-row">
+        <view class="two-col" @tap="handleToProduct(1)">
+          <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+        </view>
+        <view class="two-col" @tap="handleToProduct(1)">
+          <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="clear-line"></view>
+    <!-- 内容版面 -->
+    <view class="product-view-module">
+      <view class="header">
+        <view class="title">
+          SUPER-HOT 
+        </view>
+      </view>
+      <view class="content">
+        <view class="one-line-one" @tap="handleToProduct(0)">
+          <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+        </view>
+        <view class="two-inline">
+          <view class="one-line-two" @tap="handleToProduct(0)">
+            <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+            <view class="item-msg">
+              <view class="title">课程</view>
+              <view class="des">课程课程课程课程</view>
+              <view class="money">¥1000</view>
+            </view>
+          </view>
+          <view class="one-line-two" @tap="handleToProduct(0)">
+            <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+            <view class="item-msg">
+              <view class="title">课程</view>
+              <view class="des">课程课程课程课程</view>
+              <view class="money">¥1000</view>
+            </view>
+          </view>
+        </view>
+        <view class="two-inline">
+          <view class="one-line-two" @tap="handleToProduct(0)">
+            <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+            <view class="item-msg">
+              <view class="title">课程</view>
+              <view class="des">课程课程课程课程</view>
+              <view class="money">¥1000</view>
+            </view>
+          </view>
+          <view class="one-line-two" @tap="handleToProduct(0)">
+            <image src="http://static.sunlands.com/wechat-management/prod/openCourse/banner/741d1dce0e611c7677b9a2703ac65012fcd59e40.png"></image>
+            <view class="item-msg">
+              <view class="title">课程</view>
+              <view class="des">课程课程课程课程</view>
+              <view class="money">¥1000</view>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
       <view>home</view>
   </view>

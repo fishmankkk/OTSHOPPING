@@ -1,8 +1,49 @@
 <style lang="less" scoped>
+.cart-foot-tool{
+  width: 100%;
+  height: 85rpx;
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  flex-direction: row;
+  align-items: center;
+  .left{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20rpx
+  }
+  .go-build-order{
+    width: 200rpx;
+    height: 85rpx;
+    line-height: 85rpx;
+    text-align: center;
+    background-color: #eeeeee;
+    color: #fff;
+  }
+  .go-build-order.on{
+    background-color: #5f4b8b;
+  }
+}
 </style>
 <template>
   <view class="container">
-      <text>cart</text>
+      <view class="cart-list">
+        <view></view>
+      </view>
+      <!-- 底部工具条 -->
+      <view class="cart-foot-tool">
+        <view class="left">
+          <view class="select-all-btn" @tap="selectCartAll">
+            
+            <label class="radio">
+              <radio checked="{{radioOnAll}}" color="#5f4b8b" />全选
+            </label>
+          </view>
+          <view class="count-total">¥1000.00</view>
+        </view>
+        <view class="go-build-order on">结算</view>
+      </view>
   </view>
 </template>
 
@@ -33,6 +74,7 @@
     mixins = [testMixin]
 
     data = {
+      radioOnAll: false
     }
 
     computed = {
