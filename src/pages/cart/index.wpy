@@ -1,4 +1,57 @@
 <style lang="less" scoped>
+.cart-list{
+  width: 100%;
+  .cart-item{
+    display: flex;
+    flex-direction: row;
+    height: 200rpx;
+    width: 100%;
+    align-items: center;
+    .item-on-btn{
+      width: 100rpx;
+      text-align: center;
+    }
+    .item-img{
+      width: 150rpx;
+      image{
+        width: 150rpx;
+        height: 150rpx;
+      }
+    }
+    .item-msg{
+      flex: 1;
+      padding: 5rpx 20rpx;
+      display: flex;
+      flex-direction: column;
+      flex-basis: 100%;
+      justify-content: space-between;
+      .main-msg{
+        display: flex;
+        flex-direction: row;
+        .title{
+          font-size: 28rpx;
+          font-weight: 600;
+          flex: 1;
+        }
+        .num{
+          font-size: 28rpx;
+          width: 80rpx;
+          padding: 0 10rpx;
+          text-align: center;
+        }
+      }
+      .about-msg{
+        font-size: 24rpx;
+        color: #666666;
+      }
+      .price-msg{
+        font-size: 28rpx;
+        color: #CE0000;
+        font-weight: 600;
+      }
+    }
+  }
+}
 .cart-foot-tool{
   width: 100%;
   height: 85rpx;
@@ -29,20 +82,40 @@
 <template>
   <view class="container">
       <view class="cart-list">
-        <view></view>
+        <repeat for="{{cartItemList}}" key="index" index="index" item="item">
+          <view class="cart-item">
+            <view class="item-on-btn">
+              <checkbox-group @change="selectItem">
+                <label class="radio">
+                  <checkbox value="{{item.checkname}}" checked="{{item.checked}}" color="#5f4b8b" />
+                </label>
+              </checkbox-group>
+            </view>
+            <view class="item-img">
+              <image src="{{item.imageUrl}}"></image>
+            </view>
+            <view class="item-msg">
+              <view class="main-msg">
+                <view class="title">{{item.name}}</view>
+                <view class="num">x{{item.num}}</view>
+              </view>
+              <view class="about-msg">{{item.about}}</view>
+              <view class="price-msg">¥{{item.price}}</view>
+            </view>
+          </view>
+        </repeat>
       </view>
       <!-- 底部工具条 -->
       <view class="cart-foot-tool">
         <view class="left">
-          <view class="select-all-btn" @tap="selectCartAll">
-            
-            <label class="radio">
-              <radio checked="{{radioOnAll}}" color="#5f4b8b" />全选
-            </label>
-          </view>
+            <checkbox-group class="select-all-btn" @change="selectCartAll">
+              <label class="radio">
+                <checkbox value="{{radioOnAll.name}}" checked="{{radioOnAll.checked}}" color="#5f4b8b" />{{radioOnAll.value}}
+              </label>
+            </checkbox-group>
           <view class="count-total">¥1000.00</view>
         </view>
-        <view class="go-build-order on">结算</view>
+        <view class="go-build-order on"  @tap="goBuildOrder">结算</view>
       </view>
   </view>
 </template>
@@ -74,7 +147,17 @@
     mixins = [testMixin]
 
     data = {
-      radioOnAll: false
+      cartItemList: [
+        {
+          checkname: 'item1',
+          imageUrl: 'http://static.sunlands.com/wechat-management/prod/openCourse/banner/8714fbf1603c0d7d7e83dd329eff1a8d74c63942.png',
+          name: '自考英语快速提升之道',
+          num: 1,
+          price: 999,
+          about: '套餐:套餐1 类型:类型1'
+        }
+      ],
+      radioOnAll: {name: 'onall', value: '全选'}
     }
 
     computed = {
@@ -82,6 +165,12 @@
     }
 
     methods = {
+      selectCartAll(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+      },
+      goBuildOrder(e) {
+        console.log('结算')
+      }
     }
 
     onLoad() {
