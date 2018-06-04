@@ -1,4 +1,5 @@
 <style lang="less">
+
 view {
   box-sizing: border-box;
 }
@@ -28,6 +29,8 @@ export default class extends wepy.app {
       'pages/home/index',
       'pages/cart/index',
       'pages/profile/index',
+      'pages/detail/index',
+      'pages/demo/index',
       'pages/index'
     ],
     window: {

@@ -1,0 +1,34 @@
+<style lang="less" scoped>
+</style>
+<template>
+  <view class="page">
+
+    <htmlParser :parserName.sync="'content'" :parserContent.sync="content"></htmlParser>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import htmlParser from '@/components/htmlParse'
+
+  export default class extends wepy.page {
+    config = {
+      navigationBarTitleText: 'DETAIL'
+    }
+    components = {
+      htmlParser
+    }
+    data = {
+      content: ''
+    }
+
+    onLoad() {
+      this.getAllData()
+    }
+    getAllData() {
+      this.content = '<p>测试121321321</p>'
+      this.$apply()
+      this.$invoke('htmlParser', 'htmlParserNotice')
+    }
+  }
+</script>

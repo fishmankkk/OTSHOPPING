@@ -1,0 +1,302 @@
+<style lang="less" scoped>
+.page{
+  .banner{
+    width: 750rpx;
+    height: 750rpx;
+    .banner-body{
+      height: 750rpx;
+      .slide-image{
+        width: 750rpx;
+        height: 750rpx;
+      }
+    }
+  }
+  .detail-main-content{
+      display: flex;
+      flex-direction: column;
+      padding: 20rpx;
+      .title{
+        text-align: left;
+        font-size: 46rpx;
+      }
+      .title-msg{
+        font-size: 26rpx;
+        color: rgb(114, 114, 114);
+      }
+      .pirces{
+        color: #5f4b8b;
+      }
+    }
+    .clear-line{
+      height: 20rpx;
+      background-color: #EAEAEA;
+    }
+    .mid-part{
+      .mid-line-part{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 20rpx;
+        border-bottom: 1px solid #eaeaea;
+        .label{
+          font-size: 26rpx;
+          color: rgb(114, 114, 114);
+          width: 80rpx;
+        }
+        .content{
+          display: flex;
+          flex-direction: row;
+          .item{
+            display: flex;
+            flex-direction: row;
+            font-size: 30rpx;
+            align-items: center;
+            .tag{
+              color: #5f4b8b;
+              border: 1px solid #5f4b8b;
+              border-radius: 5rpx;
+              font-size: 26rpx;
+              padding: 2rpx 5rpx;
+              text-align:center;
+            }
+            .name{
+              
+              margin: 0 10rpx;
+            }
+            .num{
+              color: rgb(114, 114, 114);
+            }
+          }
+          .item-tag{
+            font-size: 24rpx;
+            margin-right: 10rpx;
+            .name{
+              margin: 0 10rpx;
+            }
+          }
+          .tap-icon{
+            .right-icon{
+              display: inline-block;  
+              // margin: 30rpx;  
+              border-right: 3rpx solid rgb(114, 114, 114); 
+              border-bottom: 3rpx solid rgb(114, 114, 114);  
+              width: 20rpx; 
+              height: 20rpx;  
+              transform: rotate(-45deg);  
+            }
+          }
+        }
+        .content.has-tap{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex: 1;
+        }
+      }
+    }
+    .detail-part{
+      .head-moudle{
+        display: flex;
+        flex-direction: row;
+        height: 60rpx;
+        // justify-content: center;
+        align-items: center;
+        .item{
+          flex: 1;
+          text-align: center;
+          font-size: 28rpx;
+        }
+        .item.on{
+          color: #5f4b8b;
+          .title{
+            border-bottom: 2px solid #5f4b8b;
+          }
+          
+        }
+      }
+      .body-moudle{
+        .item{
+          display: none;
+        }
+        .item.on{
+          display: block;
+        }
+      }
+    }
+}
+
+
+</style>
+<template>
+  <view class="page">
+    <view class="banner">
+      <swiper class="banner-body" indicator-dots indicator-active-color="#5f4b8b">
+        <repeat for="{{productData.bannerList}}" key="index" index="index" item="item">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image"/>
+          </swiper-item>
+        </repeat>
+    </swiper>
+    </view>
+    <view class="detail-main-content">
+      <view class="title">{{productData.name}}</view>
+      <view class="title-msg">{{productData.nameMsg}}</view>
+      <view class="pirces">¥{{productData.pirces}}</view>
+    </view>
+    <view class="clear-line"></view>
+
+    <view class="mid-part">
+      <view class="activity-part mid-line-part">
+        <view class="label">促销</view>
+        <view class="content">
+          <repeat for="{{productData.activityData}}" key="activityIndex" index="activityIndex" item="activityItem">
+            <view class="item">
+              <view class="tag">{{activityItem.tag}}</view>
+              <view class="name">{{activityItem.name}}</view>
+            </view>
+          </repeat>
+        </view>
+        
+      </view>
+      <view class="select-part mid-line-part">
+        <view class="label">已选</view>
+        <view class="content has-tap">
+          <view class="item">
+              {{productData.selectData.name}}
+              <repeat for="{{productData.selectData.select}}" key="selectIndex" index="selectIndex" item="selectItem">
+                <text space>  {{selectItem}}</text>
+              </repeat>
+              <text class="num" space>  x{{productData.selectData.num}}</text>
+          </view>
+          <view class="tap-icon"><view class="right-icon"></view></view>
+        </view>
+      </view>
+
+      <view class=" mid-line-part">
+        <view class="content">
+          <repeat for="{{productData.qualityData}}" key="qualityIndex" index="qualityIndex" item="qualityItem">
+            <view class="item-tag">
+              <icon type="success_no_circle" size="12" color="#5f4b8b"/>
+              <text class="name">{{qualityItem}}</text>
+            </view>
+          </repeat>
+        </view>
+      </view>
+    </view>
+
+    <view class="clear-line"></view>
+
+    <view class="detail-part">
+      <view class="head-moudle">
+        <view class="item on"><text class="title">概述</text></view>
+        <view class="item"><text class="title">参数</text></view>
+      </view>
+      <view class="body-moudle">
+        <view class="item on">
+           <htmlParser :parserName.sync="'content'" :parserContent.sync="content"></htmlParser>
+          <!-- {{productData.summaryDetail}} -->
+        </view>
+        <view class="item">
+          <!-- <richParse1 :parserName="name" :parserContent.sync="htmlParse1"></richParse1> -->
+          <!-- {{productData.parameterDetail}} -->
+          </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import htmlParser from '@/components/htmlParse'
+
+  export default class extends wepy.page {
+    config = {
+      navigationBarTitleText: 'DETAIL'
+    }
+    components = {
+      htmlParser
+    }
+    data = {
+      parserName: 'myhtmlParser',
+      name1: 'myHtmlParser1',
+      content: '',
+      htmlParse1: '',
+      productData: {
+        bannerList: [
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/aokfjjtr9sg4f67qffpo/air-max-lb-男子运动鞋-QTtbqk.jpg',
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/oeakjaykhp3q0wi7ru9k/air-max-lb-男子运动鞋-QTtbqk.jpg',
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/uqstwmssu5arjoeifjcl/air-max-lb-男子运动鞋-QTtbqk.jpg',
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/sf3soljtxhv3ngswbdwp/air-max-lb-男子运动鞋-QTtbqk.jpg',
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/nlt0dbobhgpevvdvbkjf/air-max-lb-男子运动鞋-QTtbqk.jpg',
+          'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/tzk4inrpfd2x7cwj33ia/air-max-lb-男子运动鞋-QTtbqk.jpg'
+        ],
+        name: 'Nike Air Max LB',
+        nameMsg: 'Nike Air Max LB 男子运动鞋以 20 世纪末、21 世纪初的几款经典运动鞋为设计灵感，采用利落结构，搭配经典缓震配置，塑就非凡舒适体验。',
+        pirces: 899,
+        activityData: [
+          {
+            tag: '折扣',
+            name: '七折'
+          },
+          {
+            tag: '满减',
+            name: '300减50'
+          }
+        ],
+        selectData: {
+          id: 1,
+          name: 'Nike Air Max LB',
+          select: ['42码', '白色'],
+          num: 2
+        },
+        // selectData: [
+        //   {
+        //     name: '尺码',
+        //     body: [
+        //         { node: 37 },
+        //         { node: 38 },
+        //         { node: 39 },
+        //         { node: 40 },
+        //         { node: 41 },
+        //         { node: 42 }
+        //     ],
+        //     changeImg: false
+        //   },
+        //   {
+        //     name: '颜色',
+        //     body: [{
+        //       node: '白色',
+        //       img: 'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/aokfjjtr9sg4f67qffpo/air-max-lb-男子运动鞋-QTtbqk.jpg'
+        //     }, {
+        //       node: '黑色',
+        //       img: 'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ffaz9cbq7ivdoaehuxl6/air-max-lb-男子运动鞋-QTtbqk.jpg'
+        //     }],
+        //     changeImg: true
+        //   }
+        // ],
+        qualityData: ['7天无理由退货', '15天质量问题换货', '90天保修'],
+        summaryDetail: '<div>概述</div>',
+        parameterDetail: '<div>参数</div>'
+      }
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+    }
+
+    onLoad() {
+      this.getAllData()
+    }
+    onShow() {}
+    getAllData() {
+      this.htmlParse0 = this.productData.summaryDetail
+      this.content = "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
+      this.$apply()
+      this.$invoke('htmlParser', 'htmlParserNotice')
+      // this.$invoke('richParse1', 'htmlParserNotice')
+    }
+  }
+</script>

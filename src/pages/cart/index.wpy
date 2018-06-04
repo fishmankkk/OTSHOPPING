@@ -155,6 +155,14 @@
           num: 1,
           price: 999,
           about: '套餐:套餐1 类型:类型1'
+        },
+        {
+          checkname: 'item2',
+          imageUrl: 'http://static.sunlands.com/wechat-management/prod/openCourse/banner/8714fbf1603c0d7d7e83dd329eff1a8d74c63942.png',
+          name: '自考英语快速提升之道1',
+          num: 1,
+          price: 999,
+          about: '套餐:套餐1 类型:类型1'
         }
       ],
       radioOnAll: {name: 'onall', value: '全选'}

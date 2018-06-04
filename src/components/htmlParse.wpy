@@ -1,0 +1,72 @@
+<style lang="less">
+@import "../help/wxParse/wxParse.wxss";
+</style>
+
+<template>
+    <import src="/help/wxParse/wxParse.wxml"/>
+    <block wx:for="{{htmlParserTpl.nodes}}" wx:key="{{index}}">
+      <template is="wxParse0" data="{{item}}"/>
+    </block>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import WxParse from '@/help/wxParse/wxParse'
+
+  export default class html2wxml extends wepy.component {
+    props = {
+      parserName: {
+        type: String,
+        default: 'htmlParserName'
+      },
+      parserContent: {
+        type: String,
+        default: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
+      },
+      parserType: {
+        type: String,
+        default: 'html'
+      },
+      parserPadding: {
+        type: Number,
+        default: 0
+      }
+    }
+    data = {
+      htmlParserTpl: {},
+      bindData: {}
+    }
+    events = {
+      'htmlParser-broadcast': ($event, ...args) => {}
+    }
+    methods = {
+      htmlParserNotice() {
+        this.htmlParse()
+      }
+    }
+    async onLoad() {
+      this.htmlParse()
+    }
+    onShow() {
+      // this.htmlParse()
+    }
+    wxParseImgLoad(image) {
+      // let imgInfo = image.detail
+    }
+    htmlParse() {
+      try {
+        let htmlContent = WxParse.wxParse(this.parserName, this.parserType, this.parserContent || this.props.parserContent.default, this, this.parserPadding)
+//        this.htmlParserTpl = this[this.parserName];
+        console.log(htmlContent)
+        this.htmlParserTpl = htmlContent[this.parserName]
+        this.$apply()
+      } catch (e) {
+        console.warn('kinerHtmlParser:', '没有任何内容需要转换', e)
+      }
+      WxParse.wxParse(this.parserName, this.parserType, this.parserContent || this.props.parserContent.default, this, this.parserPadding)
+    }
+    wxParseImgTap (e) {
+      WxParse.wxParseImgTap(e, this.bindData)
+    }
+  }
+</script>
